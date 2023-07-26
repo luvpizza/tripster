@@ -1,0 +1,36 @@
+@import "./fonts";
+@import "./mixins";
+@import "./variables";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+    background: $grey-light;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+input {
+    font-family: inherit;
+    background: none;
+    border: none;
+    &:focus {
+        outline: none !important;
+    }
+}
+button {
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    background: none;
+    border: none;
+}

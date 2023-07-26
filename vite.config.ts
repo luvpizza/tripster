@@ -21,6 +21,8 @@ function readAliasFromTsConfig() : Alias[] {
 export default defineConfig({
     plugins: [reactRefresh()],
     resolve: {
-        alias: readAliasFromTsConfig()
+        alias: {
+            '@': '/src'
+        }
     }
 })

@@ -1,0 +1,48 @@
+.hotel{
+    &__card{
+        padding: 11px;
+        display: grid;
+        grid-template-rows: 3fr 1.4fr;
+        box-shadow: 0px 1px 12px 0px rgba(3, 3, 3, 0.08);
+        border-radius: var(--border-r-20);
+    }
+    &__img{
+        border-radius: var(--border-r-20);
+        padding: 8px;
+    }
+    &__info{
+        margin-top: 10px;
+        font-style: normal;
+        font-weight: 400;
+    }
+    &__city{
+        color: var(--grey-text);
+        font-style: normal;
+        font-weight: 300;
+        font-size: var(--fsize-md);
+    }
+    &__price{
+        font-style: normal;
+        font-weight: 600;
+        font-size: var(--fsize-mdl);
+        margin-top: 8px;
+    }
+}
+.rating{
+    padding: 4px 10px;
+    width: max-content;
+    border-radius: var(--border-r-full);
+    text-align: center;
+    &__great{
+        background: var(--green-light);
+        color: var(--green-text);
+    }
+    &__ok{
+        background: var(--yellow-light);
+        color: var(--yellow-text);
+    }
+    &__warn{
+        background: var(--green-light);
+        color: var(--green-text);
+    }
+}

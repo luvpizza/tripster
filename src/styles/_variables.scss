@@ -1,20 +1,28 @@
-$black-primary: #030303;
-$blue-primary: #1D64EC;
-$grey-light: #F8F8F8;
-$grey-text: #858585;
-$grey-divider: #DEDEDE;
+:root{
+    --border-r-16: 16px;
+    --black-primary: #030303;
+    --blue-primary: #1D64EC;
+    --grey-light: #F8F8F8;
+    --grey-text: #858585;
+    --grey-divider: #DEDEDE;
+    --grey-allbg: #EDEDED;
 
-$green-text: #009D52;
-$green-light: #E1FFD7;
+    --green-text: #009D52;
+    --green-light: #E1FFD7;
 
-$yellow-text: #E1A200;
-$yellow-light:#FFF8D3;
+    --yellow-text: #E1A200;
+    --yellow-light:#FFF8D3;
 
-$border-r-full: 100px;
-$border-r-20: 20px;
-$border-r-16: 16px;
+    --border-r-full: 100px;
+    --border-r-20: 20px;
+    --border-r-16: 16px;
+    --border-r-32: 32px;
 
-$fsize-md: 14px;
-$fsize-20: 20px;
-$fsize-lg: 22px;
-$fsize-sm: 12px;
+    --fsize-md: 14px;
+    --fsize-mdl: 15px;
+    --fsize-20: 20px;
+    --fsize-18: 18px;
+    --fsize-lg: 22px;
+    --fsize-sm: 12px;
+    --fsize-19: 19px;
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {HelloWorld, HelloWorld2} from '@/components/test';
 import {ROUTE_PATH} from '@/types/other';
+import HomePage from '@/pages/HomePage/HomePage';
 
 type Route = {
     path: string;
@@ -10,7 +11,7 @@ type Route = {
 export const publicRoutesArr : Route[] = [
     {
         path: ROUTE_PATH.HOME,
-        Component: HelloWorld
+        Component: HomePage
     },
     {
         path: ROUTE_PATH.LOGIN,

@@ -12,8 +12,9 @@ html {
 }
 body {
     scroll-behavior: smooth;
-    font-family: 'Inter', sans-serif;
-    background: $grey-light;
+    font-family: 'Prompt', sans-serif;
+    background: var(--grey-allbg);
+    color: var(--black-primary);
 }
 a {
     text-decoration: none;

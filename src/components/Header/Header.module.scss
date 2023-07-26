@@ -1,0 +1,31 @@
+@import "@/styles/mixins";
+.header{
+    @include flex-between;
+    height: 90px;
+    padding: 0 50px;
+    border-top-left-radius: var(--border-r-16);
+    border-top-right-radius: var(--border-r-16);
+    background: #fff;
+    // border-bottom: 1px solid var(--grey-divider);
+    &__logo{
+        font-style: normal;
+        font-weight: 600; 
+        font-size: var(--fsize-lg);
+    }
+    &__links{
+        @include flex-between;
+        gap: 60px;
+    }
+    &__nav{
+        display: flex;
+        align-items: center;
+        gap: 45px;
+        font-style: normal;
+        font-weight: 300;
+        font-size: var(--fsize-md);
+    }
+    &__btns{
+        @include flex-between;
+        gap: 15px;
+    }
+}

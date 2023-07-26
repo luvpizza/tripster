@@ -1,0 +1,27 @@
+@import "@/styles/mixins";
+.footer{
+    height: 160px;
+    background: var(--grey-light);
+    display: flex;
+    align-items: center;
+    &__logo{
+        font-style: normal;
+        font-weight: 500;
+        font-size: var(--fsize-lg)
+    }
+    &__text{
+        font-style: normal;
+        font-weight: 300;
+        font-size: var(--fsize-sm)
+    }
+    &__credentials{
+        font-style: normal;
+        font-weight: 300;
+        font-size: var(--fsize-sm);
+        color: var(--grey-text);
+        margin-top: 28px;
+    }
+}
+.container{
+    @include container;
+}

@@ -1,0 +1,17 @@
+.city {
+    &__card {
+        border-radius: var(--border-r-20);
+        background: var(--grey-light);
+        display: grid;
+    }
+    &__name{
+        width: max-content;
+        align-self: flex-end;
+        font-size: 15px;
+        padding: 3px 18px;
+        margin-bottom: 15px;
+        background: rgba(255, 255, 255, 0.64);
+        border-radius: var(--border-r-full);
+        margin-left: 15px;
+    }
+}

@@ -1,4 +1,3 @@
-import {useFormikContext} from 'formik';
 import React, {FC, ButtonHTMLAttributes} from 'react';
 import s from './Button.module.scss';
 

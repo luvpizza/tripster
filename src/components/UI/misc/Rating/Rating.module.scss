@@ -1,0 +1,47 @@
+@import "@/styles/mixins";
+.rating{
+    padding: 4px 10px;
+    width: 60px;
+    @include flex-centered;
+    border-radius: var(--border-r-full);
+    text-align: center;
+    &__grid{
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        column-gap: 7px;
+        &__title{
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        &__reviews{
+            font-style: normal;
+            font-weight: 300;
+            font-size: var(--fsize-sm);
+            color: var(--grey-text);
+        }
+    }
+    &__great{
+        background: var(--green-light);
+        color: var(--green-text);
+    }
+    &__ok{
+        background: var(--yellow-light);
+        color: var(--yellow-text);
+    }
+    &__warn{
+        background: var(--green-light);
+        color: var(--green-text);
+    }
+}
+.title{
+    &__great{
+        color: var(--green-text);
+    }
+    &__ok{
+        color: var(--yellow-text);
+    }
+    &__warn{
+        color: var(--green-text);
+    }
+}

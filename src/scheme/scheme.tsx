@@ -1,11 +1,5 @@
 import {object, ref, string} from 'yup';
 
-export const createWorkoutScheme = object({
-    workoutName: string()
-        .min(4, 'Поле должно содержать минимум 4 символа')
-        .required('Обязательное поле')
-});
-
 export const loginScheme = object({
     email: string()
         .email('Не корректно введенный email')

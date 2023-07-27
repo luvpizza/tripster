@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { privateRoutesArr, publicRoutesArr } from './routes';
+import { Layout } from '@/components/Layout/Layout';
 import PrivateRoute from './private-route/PrivateRoute';
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
-import { Layout } from '@/components/Layout/Layout';
 
 const AppRouter = () => {
     return (

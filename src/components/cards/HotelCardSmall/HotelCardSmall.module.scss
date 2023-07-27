@@ -1,3 +1,4 @@
+@import "@/styles/mixins";
 .hotel{
     &__card{
         padding: 11px;
@@ -22,10 +23,14 @@
         font-size: var(--fsize-md);
     }
     &__price{
+        @include flex-between;
         font-style: normal;
         font-weight: 600;
         font-size: var(--fsize-mdl);
         margin-top: 8px;
+        &:hover{
+            color: var(--grey-text);
+        }
     }
 }
 .rating{

@@ -1,0 +1,18 @@
+@import '@/styles/mixins';
+
+.back__btn{
+    @include flex-centered;
+    padding: 10px;
+    border-radius: var(--border-r-full);
+    background: rgba(0, 0, 0, 0);
+    transition: 0.2s ease;
+    & >svg > path {
+        transition: 0.1s;}
+    &:hover > svg > path {
+            fill: #fff;
+    }
+    &:hover{
+        background: var(--grey-divider);
+    }
+    
+}

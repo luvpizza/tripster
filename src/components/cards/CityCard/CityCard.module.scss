@@ -3,6 +3,10 @@
         border-radius: var(--border-r-20);
         background: var(--grey-light);
         display: grid;
+        transition: filter 0.15s ease;
+        &:hover{
+            filter: brightness(80%);
+        }
     }
     &__name{
         width: max-content;

@@ -1,0 +1,32 @@
+.review{
+    display: grid;
+    grid-template-columns: 3.5fr 1fr;
+    &__body{
+        border-bottom: 1px solid var(--grey-light);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0px 5px 5px;
+    }
+    &__info{
+        justify-content: space-between;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        align-items: flex-end;
+    }
+    &__comment{
+        cursor: default;
+        font-weight: 300;
+    }
+    &__author{
+        font-size: var(--fsize-20);
+        font-weight: 700;
+        transition: 0.4s;
+    }
+    &__date{
+        color: var(--grey-text);
+        font-weight: 200;
+    }
+}

@@ -4,13 +4,21 @@
     font-size: var(--fsize-md);
     padding: 10px 30px;
     border-radius: var(--border-r-full);
-    border: 1px solid var(--blue-primary);
+    border: 1px solid rgba(255, 255, 255, 0);
+    transition: 0.15s ease;
     &__solid{
         color: #fff;
         background: var(--blue-primary);
+        &:hover{
+            background: var(--blue-hover);
+        }
     }
     &__outlined{
+        border: 1px solid var(--blue-primary);
         color: var(--blue-primary);
+        &:hover{
+            box-shadow: 2px 4px 12px var(--blue-primary-30);
+        }
     }
     }
 .fullwidth {

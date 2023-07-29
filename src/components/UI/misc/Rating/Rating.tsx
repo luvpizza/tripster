@@ -5,7 +5,7 @@ interface RatingProps extends HTMLAttributes < HTMLDivElement > {
     rating: number,
     type: 'full' | 'small',
     reviewCount?: number,
-    className: string,
+    className?: string,
 }
 
 const Rating : FC < RatingProps > = ({

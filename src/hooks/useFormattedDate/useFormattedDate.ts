@@ -11,7 +11,7 @@ const useFormattedDate: Function = (utcDateStr: string) => {
         setFormattedDate] = useState('');
     useEffect(() => {
         const parsedDate = dayjs.utc(utcDateStr);
-        const formattedDateStr = parsedDate.format('MMMM D');
+        const formattedDateStr = parsedDate.format('D MMMM, YYYY');
         setFormattedDate(formattedDateStr);
     }, [utcDateStr]);
 

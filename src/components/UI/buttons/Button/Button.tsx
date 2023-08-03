@@ -13,11 +13,13 @@ const Button : FC < ButtonProps > = ({
     children,
     loading,
     fullWidth,
+    type,
     ...rest
 }) => {
 
     return (
         <button
+            type={type}
             className={`${s.btn} ${fullWidth
             ? s.fullwidth
             : ''} ${className

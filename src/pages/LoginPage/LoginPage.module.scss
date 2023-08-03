@@ -1,0 +1,22 @@
+@import "@/styles/mixins";
+
+.login{
+    background: var(--grey-light);
+    min-height: 50vh;
+    &__content{
+        width: max-content;
+        margin: 0 auto;
+    }
+    padding-top: 40px;
+    padding-bottom: 80px;
+    &__form{
+        box-shadow: 6px 18px 12px 0px var(--blue-primary-30);
+        transition: 0.1s;
+        &:hover{
+            box-shadow: 6px 18px 12px 3px var(--blue-primary-30);
+        }
+    }
+}
+.container{
+    @include container;
+}

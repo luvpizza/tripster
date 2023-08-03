@@ -1,0 +1,48 @@
+@import "@/styles/mixins";
+.wrapper{
+    width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: var(--border-r-full);
+    background: #fff;
+    transition: 0.1s;
+    cursor: text;
+    &__icon{
+        display:flex;   
+        align-items: center;
+        & > svg{
+            fill: var(--grey-text);
+        }
+    }
+    &:hover{
+        background: var(--grey-light);
+    }
+}
+.input{
+    font-size: var(--fsize-md);
+    font-weight: 300;
+    width: 100%;
+    &__custom{
+        position: relative;
+    }
+}
+.error{
+    border: 1px solid red;
+    & > input{
+        color: red;
+        &::placeholder{
+            color: red;
+            opacity: 1;
+        }
+    }
+}
+.field__error{
+    position: absolute;
+    font-size: 12px;
+    bottom: -18px;
+    left: 0px;
+    color: red;
+}

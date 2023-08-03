@@ -1,0 +1,42 @@
+.signup{
+    &__wrapper{
+        border: 2px solid var(--grey-light);
+        border-radius: var(--border-r-16);
+        width: max-content;
+        padding: 25px 35px;
+        background: #fff;
+    }
+    &__form{
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+    }
+    &__radios{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    &__radiobutton{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: var(--fsize-md);
+    }
+}
+.to{
+    &_signup{
+        font-size: 14px;
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
+.text{
+    &_blue{
+        color: var(--blue-primary);
+        font-weight: 600;
+    }
+    &_green{
+        color: var(--green-text);
+        font-weight: 600;
+    }
+}

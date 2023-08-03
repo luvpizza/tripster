@@ -7,7 +7,7 @@ type PrivateRouteProps = {
 };
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ Component }) => {
-  const user = true; //need real validation
+  const user = false; //need real validation
   return user ? <Component /> : <Navigate to={ROUTE_PATH.LOGIN} />;
 };
 

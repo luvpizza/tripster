@@ -1,9 +1,8 @@
+import {FC, useState} from 'react';
 import RoomCard from '@/components/cards/RoomCard/RoomCard';
 import Review from '@/components/Review/Review';
 import GoBackButton from '@/components/UI/buttons/GoBackButton/GoBackButton';
 import Rating from '@/components/UI/misc/Rating/Rating';
-import {FC, useState} from 'react';
-import { NavLink } from 'react-router-dom';
 
 import s from "./HotelPage.module.scss"
 
@@ -15,7 +14,7 @@ import s from "./HotelPage.module.scss"
 //     services?: string[] //edit
 // }
 
-// needs pagination
+// needs review pagination
 
 const HotelPage: FC = () => {
 
@@ -154,7 +153,7 @@ const HotelPage: FC = () => {
                         <div className={s.hotel__reviews}>
                             
                             <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti nemo ratione est excepturi aut deserunt quia. Quasi, ipsa nobis. Soluta, iusto asperiores. Non magnam perspiciatis nemo error asperiores corporis? Odit facilis natus aperiam optio, autem harum!'} rating={9.6} date={"March 20"}/>
-                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={6.152} date={"September 21"}/>
+                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={6.152} date={"March 2"}/>
                             <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={4} date={"September 21"}/>
                             <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={9.6} date={"September 21"}/>
                         </div>

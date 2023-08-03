@@ -23,10 +23,11 @@
     &__author{
         font-size: var(--fsize-20);
         font-weight: 700;
-        transition: 0.4s;
+        transition: 0.2s;
     }
     &__date{
         color: var(--grey-text);
         font-weight: 200;
+        text-align: right;
     }
 }

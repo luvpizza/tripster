@@ -25,7 +25,7 @@ const Review: FC<ReviewProps> = ({className, reviewId, userId, username, comment
             </div>
             <div className={s.review__info}>
                 <Rating type='small' rating={rating}/>
-                <p className={s.review__date}>Reviewed on {useFormattedDate("2023-07-15T13:45:30")}</p>
+                <p className={s.review__date}>Reviewed on<br/> {useFormattedDate(date)}</p>
             </div>
         </div>
     );

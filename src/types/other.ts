@@ -1,7 +1,7 @@
 export enum ROUTE_PATH {
     HOME = '/',
     LOGIN = '/login',
-    REGISTER = '/register',
+    SIGNUP = '/signup',
     HOTEL = '/hotel/:id',
     PROFILE = '/profile',
     NOT_FOUND = '*',

@@ -1,0 +1,27 @@
+.login{
+    &__wrapper{
+        border: 2px solid var(--grey-light);
+        border-radius: var(--border-r-16);
+        width: max-content;
+        padding: 25px 35px;
+        background: #fff;
+    }
+    &__form{
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+    }
+}
+.to{
+    &_signup{
+        font-size: 14px;
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
+.text{
+    &_blue{
+        color: var(--blue-primary);
+        font-weight: 600;
+    }
+}

@@ -9,7 +9,7 @@ const Footer : FC = () => {
                     <h2 className={s.footer__logo}>Tripster</h2>
                     <p className={s.footer__text}>Your favorite hotel booking experience since 2023!</p>
                 </div>
-                <p className={s.footer__credentials}>Tripster © 2023. Developed by Shamiev S.</p>
+                <p className={s.footer__credentials}>Tripster © 2023. Designed by Uizard. Developed by Shamiev S.</p>
             </div>
         </footer>
     );

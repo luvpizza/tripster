@@ -2,22 +2,22 @@ import {object, ref, string} from 'yup';
 
 export const loginScheme = object({
     email: string()
-        .email('Не корректно введенный email')
-        .required('Обязательное поле'),
+        .email('E-mail is incorrect')
+        .required('Required field'),
     password: string()
-        .min(8, 'Длина пароля должна быть не менее 8 символов')
-        .required('Обязательное поле')
+        .min(8, 'Password is incorrect (8 characters at least)  ')
+        .required('Required field')
 });
 
-export const registerScheme = object({
-    name: string()
-        .max(25, 'Длина имени не может быть более 25 символов')
-        .required('Обязательное поле'),
+export const signupScheme = object({
+    firstName: string()
+        .max(35, 'Field\'s max length is 35 characters')
+        .required('Required field'),
     email: string()
-        .email('Не корректно введенный email')
-        .required('Обязательное поле'),
+        .email('E-mail is incorrect')
+        .required('Required field'),
     password: string()
-        .min(8, 'Длина пароля должна быть не менее 8 символов')
-        .required('Обязательное поле'),
-    confirmPassword: string().oneOf([ref('password')], 'Пароли не совпадают').required('Обязательное поле')
+        .min(8, 'Password should be at least 8 characters long')
+        .required('Required field'),
+    confirmPassword: string().oneOf([ref('password')], 'Passwords should match').required('Required field')
 });

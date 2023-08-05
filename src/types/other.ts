@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 export enum ROUTE_PATH {
     HOME = '/',
     LOGIN = '/login',
@@ -12,4 +13,10 @@ export type Room = {
     name: string,
     price: number,
     imageURL: string
+}
+export type NavTab = {
+    tabId: number,
+    icon?: ReactNode,
+    title: string,
+    section: ReactNode,
 }

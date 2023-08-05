@@ -1,5 +1,5 @@
-import {FC} from 'react';
-import {Link} from 'react-router-dom';
+import {FC, useEffect} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {useFormik} from 'formik'
 import {loginScheme} from '@/scheme/scheme';
 
@@ -8,6 +8,10 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import Input from '../../inputs/Input/Input';
 import Button from '../../buttons/Button/Button';
+import { useLoginMutation } from '@/app/api/auth/login/loginApi';
+import { useToast } from '@chakra-ui/react';
+import { useAppDispatch } from '@/hooks/redux/reduxHooks';
+import { setUser } from '@/store/user/slice';
 
 interface LoginFormProps {
     className?: string
@@ -15,16 +19,31 @@ interface LoginFormProps {
 
 const LoginForm : FC < LoginFormProps > = ({className}) => {
 
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const toast = useToast()
+
+    const [login, { isLoading, error, isSuccess, data }] = useLoginMutation();
     type OnClickSubmitFn = (values : {
         email: string;
         password: string
     }) => void;
 
-    const onClickSubmit : OnClickSubmitFn = ({email, password}) => {
-        console.log('Clicked:', email, password); // login logic
+    const onClickSubmit : OnClickSubmitFn = async ({email, password}) => {
+            login({email, password})
+    }
 
-    };
-
+    useEffect(() => {
+        if(isSuccess){
+            dispatch(setUser({user: data}))
+            navigate('/')
+            toast({status:"success", title:"You successfully logged in!", duration: 2200})
+        }
+        else if (error && 'status' in error){
+            console.log(error)
+            toast({status: "error", title: "Error: " + error.status, description: error.data.error, duration: 2200,})
+        }}, [isSuccess, error]);
+    
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -57,7 +76,7 @@ const LoginForm : FC < LoginFormProps > = ({className}) => {
                     helperText={formik.touched.password && formik.errors.password}
                     type={"password"}
                     placeholder="Enter your password"/>
-                <Button buttonType="solid" type={"submit"} fullWidth>Log In</Button>
+                <Button buttonType="solid" loading={isLoading} type={"submit"} fullWidth>Log In</Button>
                 <Link to="/signup" className={s.to_signup}>Not a member? <span className={s.text_blue}>Sign up</span></Link>
             </form>
 

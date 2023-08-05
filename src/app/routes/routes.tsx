@@ -5,6 +5,7 @@ import HomePage from '@/pages/HomePage/HomePage';
 import HotelPage from '@/pages/HotelPage/HotelPage';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
+import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 
 type Route = {
     path: string;
@@ -24,7 +25,7 @@ export const publicRoutesArr : Route[] = [
 export const privateRoutesArr : Route[] = [
     {
         path: ROUTE_PATH.PROFILE,
-        Component: HelloWorld2
+        Component: ProfilePage
     }
 ];
 

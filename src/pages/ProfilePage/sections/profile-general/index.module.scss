@@ -1,0 +1,33 @@
+.section{
+    &__title{
+        font-size: var(--fsize-lg);
+        font-weight: 500;
+    }
+    &__subtitle{
+        font-size: var(--fsize-md);
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
+.info{
+    &__grid{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+    }
+}
+.grid{
+    &__item{
+        display: grid;
+        grid-template-columns: 0.35fr 1fr;
+    }
+}
+.item{
+    &__key{
+        font-weight: 600;
+    }
+    &__value{
+        font-weight: 300;
+    }
+}

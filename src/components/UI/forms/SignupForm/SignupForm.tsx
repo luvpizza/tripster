@@ -1,44 +1,53 @@
+import React, {FC, useEffect} from 'react';
 import {useFormik} from 'formik';
-import React, {FC} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../buttons/Button/Button';
 import Input from '../../inputs/Input/Input';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import { signupScheme } from '@/scheme/scheme';
 
 import s from "./SignupForm.module.scss"
-import { Link } from 'react-router-dom';
-import { signupScheme } from '@/scheme/scheme';
+import { useSignupMutation } from '@/app/api/auth/signup/signupApi';
+import { useAppDispatch } from '@/hooks/redux/reduxHooks';
+import { setUser } from '@/store/user/slice';
+import { useToast } from '@chakra-ui/react';
 
 interface SignupFormProps {
     className?: string
 }
 
-const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
-
     type OnClickSubmitFn = (values : {
-        firstName: string,
+        fullName: string,
         email: string,
         password: string,
         confirmPassword: string,
-        role: "default" | "owner"
+        role: "user" | "owner"
     }) => void;
 
-    const onClickSubmit : OnClickSubmitFn = ({firstName, email, password, confirmPassword, role}) => {
-        console.log({email, firstName, password, confirmPassword, role}); // signup login
-        role === "default"
-            ? console.log("reg => tourist")
-            : role === "owner" && console.log("reg => owner");;
-
+const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
+    const navigate = useNavigate()
+    const toast = useToast()
+    const [signup, {data, isLoading, isSuccess, error, isError}] = useSignupMutation();
+    const onClickSubmit : OnClickSubmitFn = ({fullName, email, password, confirmPassword, role}) => {
+        signup({email, fullName, password, role})
     };
+
+    useEffect(() => {
+        if(isSuccess){
+            navigate('/login')
+            toast({status:"success", title:"You successfully signed up!", description:"Now log in using your new credentials", duration: 5800})
+        }
+    }, [isSuccess, error]);
 
     const formik = useFormik({
         initialValues: {
-            firstName: '',
+            fullName: '',
             email: '',
             password: '',
             confirmPassword: '',
-            role: "default"
+            role: "user",
         },
         validationSchema: signupScheme,
         onSubmit: onClickSubmit
@@ -47,7 +56,7 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
     return (
         <div className={`${s.signup__wrapper} ${className && className}`}>
             <form className={s.signup__form} onSubmit={formik.handleSubmit}>
-                <h3>Sign up as {formik.values.role === "owner" ? <span className={s.text_green}>owner</span> :  formik.values.role === "default" && <span className={s.text_blue}>tourist</span> }</h3>
+                <h3>Sign up as {formik.values.role === "owner" ? <span className={s.text_green}>owner</span> :  formik.values.role === "user" && <span className={s.text_blue}>tourist</span> }</h3>
                 <Input
                     icon={< AlternateEmailIcon />}
                     id="email"
@@ -59,12 +68,12 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
                     placeholder="Enter your e-mail"/>
                 <Input
                     icon={< AccountCircleIcon />}
-                    id="firstName"
-                    name="firstName"
-                    value={formik.values.firstName}
+                    id="fullName"
+                    name="fullName"
+                    value={formik.values.fullName}
                     onChange={formik.handleChange}
-                    error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-                    helperText={formik.touched.firstName && formik.errors.firstName}
+                    error={formik.touched.fullName && Boolean(formik.errors.fullName)}
+                    helperText={formik.touched.fullName && formik.errors.fullName}
                     type={"text"}
                     placeholder="Enter your name"/>
                 <Input
@@ -93,7 +102,7 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
                             type="radio"
                             name="role"
                             value="default"
-                            checked={formik.values.role === "default"}
+                            checked={formik.values.role === "user"}
                             onChange={formik.handleChange}
                         />
                         I'm a <span className={s.text_blue}>tourist</span>
@@ -109,7 +118,7 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
                         I'm a <span className={s.text_green}>hotel owner</span>
                     </label>
                 </div>
-                <Button buttonType="solid" type={"submit"} fullWidth>Sign up</Button>
+                <Button buttonType="solid" type={"submit"} loading={isLoading} fullWidth>Sign up</Button>
                 <Link to="/login" className={s.to_signup}>Have an account? <span className={s.text_blue}>Log In</span></Link>
             </form>
         </div>

@@ -35,7 +35,7 @@ const HomePagePopular : FC = () => {
         <section className={s.home__popular} id="popular">
             <h3 className={s.popular__title}>Popular destinations</h3>
             <div className={s.popular__grid}>
-                {popular.map((city,idx)=>{return <CityCard name={city.name} imageURL={city.imageURL} className={`${s.grid__city}`}/>})}
+                {popular.map((city,idx)=>{return <CityCard name={city.name} key={idx} imageURL={city.imageURL} className={`${s.grid__city}`}/>})}
             </div>
         </section>
     );

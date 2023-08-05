@@ -1,3 +1,4 @@
+import { Spinner } from '@chakra-ui/react';
 import React, {FC, ButtonHTMLAttributes} from 'react';
 import s from './Button.module.scss';
 
@@ -29,7 +30,7 @@ const Button : FC < ButtonProps > = ({
                     : buttonType === 'outlined' && s.btn__outlined}`}
             {...rest}>
             {loading
-                ? 'Loading'
+                ? <Spinner size={'sm'}/>
                 : children}
         </button>
     );

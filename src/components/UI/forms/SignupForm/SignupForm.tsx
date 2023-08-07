@@ -8,11 +8,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { signupScheme } from '@/scheme/scheme';
 
-import s from "./SignupForm.module.scss"
 import { useSignupMutation } from '@/app/api/auth/signup/signupApi';
-import { useAppDispatch } from '@/hooks/redux/reduxHooks';
-import { setUser } from '@/store/user/slice';
 import { useToast } from '@chakra-ui/react';
+import s from "./SignupForm.module.scss"
 
 interface SignupFormProps {
     className?: string
@@ -29,15 +27,19 @@ interface SignupFormProps {
 const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
     const navigate = useNavigate()
     const toast = useToast()
-    const [signup, {data, isLoading, isSuccess, error, isError}] = useSignupMutation();
+    const [signup, {data, isLoading, isSuccess, error}] = useSignupMutation();
     const onClickSubmit : OnClickSubmitFn = ({fullName, email, password, confirmPassword, role}) => {
-        signup({email, fullName, password, role})
+        signup({email, fullName, password, passwordConfirmation: confirmPassword, role})
     };
 
     useEffect(() => {
         if(isSuccess){
             navigate('/login')
             toast({status:"success", title:"You successfully signed up!", description:"Now log in using your new credentials", duration: 5800})
+        }
+        else if (error && 'status' in error){
+            console.log(error)
+            toast({status: "error", title: "Error: " + error.status, description: error.data.error, duration: 2200,})
         }
     }, [isSuccess, error]);
 
@@ -54,7 +56,7 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
     });
 
     return (
-        <div className={`${s.signup__wrapper} ${className && className}`}>
+        <div className={`${s.signup__wrapper} ${className && className}`} {...rest}>
             <form className={s.signup__form} onSubmit={formik.handleSubmit}>
                 <h3>Sign up as {formik.values.role === "owner" ? <span className={s.text_green}>owner</span> :  formik.values.role === "user" && <span className={s.text_blue}>tourist</span> }</h3>
                 <Input
@@ -101,7 +103,7 @@ const SignupForm : FC < SignupFormProps > = ({className, ...rest}) => {
                         <input
                             type="radio"
                             name="role"
-                            value="default"
+                            value="user"
                             checked={formik.values.role === "user"}
                             onChange={formik.handleChange}
                         />

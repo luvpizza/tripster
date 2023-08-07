@@ -6,7 +6,7 @@ export const signupApi = createApi({
     baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
     endpoints: (builder) => ({
         signup: builder.mutation({
-            query: ({email, password, fullName, role}) => ({
+            query: ({email, password, passwordConfirmation, fullName, role}) => ({
                 url: role === "owner" ? '/Owner/register' : '/Auth/register',
                 method: 'POST',
                 headers:{
@@ -16,6 +16,7 @@ export const signupApi = createApi({
                     email,
                     password,
                     fullName,
+                    passwordConfirmation,
                 }
             })
         })

@@ -2,19 +2,21 @@ import { BASE_URL } from "@/app/api/BASE_URL"
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/reduxHooks"
 import axios from "axios"
-import { selectUser } from "./selectors"
+import { selectUser, selectUserToken } from "./selectors"
 import { removeUser } from "./slice";
 import { useToast } from "@chakra-ui/react";
+import { useAddFavoriteHotelMutation } from "@/app/api/user/userApi";
+import { useNavigate } from "react-router-dom";
 
-export const userLogin = (email: string, password: string) => {
+export const useAddFavorite = (id: number) => {
     
 }
 
 
 export const useCheckUser = () => {
     const toast = useToast()
-    const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch()
+    const user = useAppSelector(selectUser);
     const [userAuth, setUserAuth] = useState(false);
     useEffect(() => {
         if (user) {

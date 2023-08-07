@@ -57,6 +57,20 @@
         flex-direction: column;
         gap: 20px;
     }
+    &__preloader{
+        width: 100%;
+        height: 50vh;
+        @include flex-centered;
+    }
+    &__not_found{
+        width: 100%;
+        height: 50vh;
+        @include flex-centered;
+    }
+    &__name{
+        font-weight: 700;
+        font-size: var(--fsize-xl);
+    }
 }
 
 .overview {
@@ -110,4 +124,19 @@
     }
     font-size: var(--fsize-xxl);
     font-weight: 100;
+}
+.to{
+    &_favorites{
+        font-weight: 300;
+        margin-left: 20px;
+        color: var(--blue-primary);
+        cursor: pointer;
+        border-bottom: 1px solid var(--blue-primary);
+        font-size: var(--fsize-md);
+        &:hover{
+            color: var(--blue-hover);
+            border-bottom: 1px solid var(--blue-hover);
+
+        }
+    }
 }

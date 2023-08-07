@@ -1,0 +1,12 @@
+@import "@/styles/mixins";
+.not_found{
+    padding: 20px;
+    color: var(--grey-text);
+    font-size: var(--fsize-lg);
+    letter-spacing: 1px;
+    font-weight: 300;
+    @include flex-centered;
+    & > h2{
+        display: inline;
+    }
+}

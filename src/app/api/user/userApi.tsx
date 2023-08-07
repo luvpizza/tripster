@@ -13,10 +13,43 @@ export const userApi = createApi({
                     "Authorization": `Bearer ${token}`
                 }
             })
+        }),
+        getUserFavorites: builder.query({
+            query: (token) => ({
+                url: '/Favorites/myFavorites',
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+        }),
+        addFavoriteHotel: builder.mutation({
+            query: ({token, id}) => ({
+                url: '/Favorites',
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: id,
+            })
+        }),
+        deleteFavoriteHotel: builder.mutation({
+            query: ({token,id}) => ({
+                url: `/Favorites/${id}`,
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            })
         })
     })
-});
+})
 
 export const {
-    useGetCurrentUserQuery
+    useGetCurrentUserQuery,
+    useGetUserFavoritesQuery,
+    useAddFavoriteHotelMutation,
+    useDeleteFavoriteHotelMutation
 } = userApi;

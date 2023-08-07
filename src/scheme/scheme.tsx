@@ -1,4 +1,4 @@
-import {object, ref, string} from 'yup';
+import {date, number, object, ref, string} from 'yup';
 
 export const loginScheme = object({
     email: string()
@@ -25,3 +25,24 @@ export const signupScheme = object({
         .required('Required field'),
     confirmPassword: string().oneOf([ref('password')], 'Passwords should match').required('Required field')
 });
+
+export const searchScheme = object({
+    CityId: number()
+        .required('Required field'),
+    startDate: date()
+        .required("Check-in date is required"),
+    endDate: date()
+        .required("Check-in date is required"),
+    Persons: number()
+        .required('Enter the number of guests')
+})
+
+// export const searchScheme = .object({
+//     city: number().required('City ID is required'),
+//     checkInDate: Yup.date().required('Check-in date is required'),
+//     checkOutDate: Yup.date().required('Check-out date is required'),
+//     guests: Yup.number()
+//       .integer('Number of guests must be an integer')
+//       .min(0, 'Number of guests cannot be negative')
+//       .required('Number of guests is required'),
+//   });

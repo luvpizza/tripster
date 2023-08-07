@@ -1,24 +1,26 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import RoomCard from '@/components/cards/RoomCard/RoomCard';
 import Review from '@/components/Review/Review';
 import GoBackButton from '@/components/UI/buttons/GoBackButton/GoBackButton';
 import Rating from '@/components/UI/misc/Rating/Rating';
 
 import s from "./HotelPage.module.scss"
-
-// interface HotelProps extends HTMLAttributes < HTMLDivElement > {
-//     photos: string[],
-//     name: string,
-//     location: string,
-//     rooms?: Room[],
-//     services?: string[] //edit
-// }
-
-// needs review pagination
+import { useGetHotelByIdQuery } from '@/app/api/hotel/hotelApi';
+import usePathnameId from '@/hooks/usePathnameId/usePathnameId';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import Preloader from '@/components/Preloader/Preloader';
+import NotFound from '@/components/NotFound/NotFound';
+import { useAddFavoriteHotelMutation } from '@/app/api/user/userApi';
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/hooks/redux/reduxHooks';
+import { selectUser, selectUserToken } from '@/store/user/selectors';
 
 const HotelPage: FC = () => {
+    const id = usePathnameId()
+    const {data: hotel, isLoading, isFetching, error} = useGetHotelByIdQuery(id, {refetchOnMountOrArgChange: true, refetchOnReconnect: true})
+    const [addFavoriteHotel, {isLoading: isFavLoading, error: favError, isSuccess: isFavSuccess, data: favData}] = useAddFavoriteHotelMutation()
 
-    const rating = 9.6
     const hotelNav = [
         {
             title: "Overview",
@@ -33,92 +35,63 @@ const HotelPage: FC = () => {
             id: "#reviews"
         }
     ]
+    const toast = useToast()
+    const navigate = useNavigate()
+    const user = useAppSelector(selectUser);
+    const token = useAppSelector(selectUserToken)
     const [navSelected, setNavSelected] = useState(0)
     const [backModifier, setBackModifier] = useState(0)
 
-    const services = [
-            {
-                title: "Free Wi-Fi"
-            },
-            {
-                title: "Air conditioning"
-            },
-            {
-                title: "Private bathroom"
-            },
-            {
-                title: "Key card access"
-            },
-            {
-                title: "Free parking"
-            },
-            {
-                title: "24-hour front desk"
-            },
-    ]
-    const rooms = [
-        {
-            id: 1,
-            title: "Double standart room",
-            smoking: true,
-            maxPeople: 2,
-            imageURL: "https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-            price: 180
-        },
-        {
-            id: 2,
-            title: "Comfort single room",
-            smoking: true,
-            maxPeople: 2,
-            imageURL: "https://s3-alpha-sig.figma.com/img/8da4/54ec/c27c3caf42f097b086eeeebcf10d8291?Expires=1691366400&Signature=DT9dcL0G0zT2QDfAwaiwwqLCs6sWl9RuAmiBfA-EjmHXYkCqLpNe~d1XcV-slnBVFAi80Z0yKLvd3m-chlvoi1hRGVL8zYg~nht4-2GMGZC8lAMwpTOxwF1HMGu~GjP5rOa0o8Zvi4QgGRDP3Yxiu06aj9X0SVC1NTC-b~TXVYBJpqzCDbBINb1zmYgFIWkCSuwwvMKbO4u2w8sAR426k4ioDK5FebIDCg50LNtcTnHTWFa3dyDliFjgG5CbR9jgO64yOV8iXHal2sX2oS4lu3boADNscMKROKkZ4HrvUDCsElU0RhgSkEJvrj1USSn8qKMY-vcgPyTV15igS2EGwg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-            price: 220
-        },
-        {
-            id: 3,
-            title: "Double standart room",
-            smoking: false,
-            maxPeople: 3,
-            imageURL: "https://s3-alpha-sig.figma.com/img/1aee/e4c1/d6ec3974c9558ff794e712788fe6da9b?Expires=1691366400&Signature=Lk0aVIfeF1F9qSIMa0Dms36hhqwPzOVeyUhk7PdIdSkV4qoKVb9691QRmdttJTMVUdae4y0qoz4bXLXvr~Po-WBWLqjPEfUzmCBvN3HBlKmBg1~tfrzh~iGAhPWIhVo3P0ZfORawpjtmLTOZDkQMCz-a3zfrBQ6uCqBMkG7EI-a7We9ey20BkYZKsEQjaWSSPDpxHEPf8xt1wLLmfXwN~M2~aJ-sT1dLpQ2snl8AnhdoJg149j17x4BEJ140zxb5LrOuu5HDjYoBukX5NDGVuLcWvXAN92BgE7UnhjTlrbAIJv46Zt3KIJ0WYgxp7Ql~RaZuThl6gpWvGul-Xm2Cog__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-            price: 180
-        },
-        {
-            id: 4,
-            title: "Double fancy room",
-            smoking: false,
-            maxPeople: 2,
-            imageURL: "https://s3-alpha-sig.figma.com/img/bbf8/1d0a/4d6074d0f7951430d071f0f14c40a903?Expires=1691366400&Signature=nSkdMaR-yjtt4OY~Ak5iD0Lz3I807tfqG7QEk-eV9R4n2IeESIskxiCbV0Oh0FYzxxaFqW1kVPrr1s-7Y9H5rqm0sqKg1jeq0nLAvRW3wGnZWLnxm951XEHEDEeWR~Vsb9aEe1nGmqC4wi2twd8Hz9~bCoZ2jsW4n1cZU7zRFDtTzE3nuaOrTJdrgsc9ZKUKhcJyUHo3kl68aSYBetdR45N~MH2l5gae5z8e59xZzi35qSqQTf0e5Ky14q9Mb1bYQA~tv3stDQm~MCzzHsNbtyOn8~7fH6rG8RL-aCwR0jMwmo6IuhSag14cXW1XljoN-UfU6o981rraMxddqnfldg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-            price: 140
-        },
-    ]
+    const handleAddFavorites = (id: number) => {
+        if(user){
+            addFavoriteHotel({token, id})
+        } else {
+            navigate('/login')
+            toast({status:"error", title:"You are unauthorized to perform this action.", description: "Please log in and try again.", duration:3200})
+        }
+    }
 
+    useEffect(() => {
+        if(isFavSuccess){
+            toast({status:"success", title:"Favorite successfully added!", duration: 2200})
+        }
+        else if (favError && 'status' in favError){
+            console.log(favError)
+            toast({status: "error", title: "Something went wrong" + favError.status, duration: 1800,})
+        }}
+     ,[favError, isFavSuccess]);
 
     return (
         <section className={s.hotel}>
+            {isLoading && !error && <div className={s.hotel__preloader}><Preloader size="xl"/></div>}
+            {!isLoading && !isFetching && !hotel && <div className={s.hotel__not_found}><NotFound/></div>}
+            {(hotel && !isLoading && !error ) &&
+            <div className={s.hotel__data}>
             <div className={s.container}>
                 <GoBackButton className={s.hotel__back} modifier={backModifier}/>
                 <div className={s.hotel__photos__grid}>
                     <div className={s.hotel__photo}>
-                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
+                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1692576000&Signature=o526qRT3UgbhIKfZ4aKcbw222P5y2t63PUe0vUS9Xo41N2SjQctjvAEjt06i1LQSElc1Tm2KRtqveG22Q--i333GjrCpOoPNj73HzAqjie-7HTKf1tpjS90Ed8XO5O-tHq~pDcUcVkfDw7ECRUMMZyKd5NXxrTNGNufY7IZyI7mpuMzW1wPsq6gNuxPjmZIAiF5s9NXyAVFl6CXkpvTnbQiOUzs1RaDEl1N0VwxmywD046MIAEX6T8D8Fq~MxCOB1itnusur5xJ2Nc6FTXFg4~n9auWsxRGoyLprxPENJM0gvg47WuYYAjGdrLgdde7W5tdZ0wHms-AWZMiO0ktmwQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
                     </div>
                     <div className={s.hotel__photo}>
-                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
+                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1692576000&Signature=o526qRT3UgbhIKfZ4aKcbw222P5y2t63PUe0vUS9Xo41N2SjQctjvAEjt06i1LQSElc1Tm2KRtqveG22Q--i333GjrCpOoPNj73HzAqjie-7HTKf1tpjS90Ed8XO5O-tHq~pDcUcVkfDw7ECRUMMZyKd5NXxrTNGNufY7IZyI7mpuMzW1wPsq6gNuxPjmZIAiF5s9NXyAVFl6CXkpvTnbQiOUzs1RaDEl1N0VwxmywD046MIAEX6T8D8Fq~MxCOB1itnusur5xJ2Nc6FTXFg4~n9auWsxRGoyLprxPENJM0gvg47WuYYAjGdrLgdde7W5tdZ0wHms-AWZMiO0ktmwQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
                     </div>
                     <div className={s.hotel__photo}>
-                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
+                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1692576000&Signature=o526qRT3UgbhIKfZ4aKcbw222P5y2t63PUe0vUS9Xo41N2SjQctjvAEjt06i1LQSElc1Tm2KRtqveG22Q--i333GjrCpOoPNj73HzAqjie-7HTKf1tpjS90Ed8XO5O-tHq~pDcUcVkfDw7ECRUMMZyKd5NXxrTNGNufY7IZyI7mpuMzW1wPsq6gNuxPjmZIAiF5s9NXyAVFl6CXkpvTnbQiOUzs1RaDEl1N0VwxmywD046MIAEX6T8D8Fq~MxCOB1itnusur5xJ2Nc6FTXFg4~n9auWsxRGoyLprxPENJM0gvg47WuYYAjGdrLgdde7W5tdZ0wHms-AWZMiO0ktmwQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
                     </div>
                     <div className={s.hotel__photo}>
-                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
+                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1692576000&Signature=o526qRT3UgbhIKfZ4aKcbw222P5y2t63PUe0vUS9Xo41N2SjQctjvAEjt06i1LQSElc1Tm2KRtqveG22Q--i333GjrCpOoPNj73HzAqjie-7HTKf1tpjS90Ed8XO5O-tHq~pDcUcVkfDw7ECRUMMZyKd5NXxrTNGNufY7IZyI7mpuMzW1wPsq6gNuxPjmZIAiF5s9NXyAVFl6CXkpvTnbQiOUzs1RaDEl1N0VwxmywD046MIAEX6T8D8Fq~MxCOB1itnusur5xJ2Nc6FTXFg4~n9auWsxRGoyLprxPENJM0gvg47WuYYAjGdrLgdde7W5tdZ0wHms-AWZMiO0ktmwQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
                     </div>
                     <div className={s.hotel__photo}>
-                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1691366400&Signature=AJ33n-auyGMBNBCHXMjTYq-ZwiSf5KVdUDNndDZdemZytp0JuxolWClzL~OZbDfE-PrHT2V6~yNFL5wHg-Nddfkpk7rlsMsGe99ckyliD2bd7GtTjS1XmirpXSt4U6Mk7PSnKYXLx8C2Dtpdx90T5xMWCbVN77p9tIWJ5lNSjm95bJLok0RyMMvdLazrqJfNHEwoqM5rmv4lf4bNIrs0XMWoaTvH1U15BhtGeza5g9usikE3dbz3hHrEXjaLfnYScJWbmjU86cXdzCEtpYB9Zr-ilsMx01K~5YoP3I4QM1sOpn409Huu-br09qBLWY7jDZinsxG-Oz5urXRpAgtN3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
+                        <img src="https://s3-alpha-sig.figma.com/img/b6ef/e3cc/c880001185f5520d5ddef939be5a08ac?Expires=1692576000&Signature=o526qRT3UgbhIKfZ4aKcbw222P5y2t63PUe0vUS9Xo41N2SjQctjvAEjt06i1LQSElc1Tm2KRtqveG22Q--i333GjrCpOoPNj73HzAqjie-7HTKf1tpjS90Ed8XO5O-tHq~pDcUcVkfDw7ECRUMMZyKd5NXxrTNGNufY7IZyI7mpuMzW1wPsq6gNuxPjmZIAiF5s9NXyAVFl6CXkpvTnbQiOUzs1RaDEl1N0VwxmywD046MIAEX6T8D8Fq~MxCOB1itnusur5xJ2Nc6FTXFg4~n9auWsxRGoyLprxPENJM0gvg47WuYYAjGdrLgdde7W5tdZ0wHms-AWZMiO0ktmwQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4" alt="hotel room" />
                     </div>
                 </div>
                 <div className={s.hotel__description_grid}>
                     <div className={s.grid__item}>
-                        <h2 className={s.hotel__name}>Hotel Norrebro</h2>
-                        <p className={s.hotel__smdesc}>3-star hotel салем in heart of Copenhagen</p>
+                        <h2 className={s.hotel__name}>{hotel.name} <span className={s.to_favorites} onClick={()=>{handleAddFavorites(hotel.id)}}>Add to favorites</span></h2>
+                        <p className={s.hotel__smdesc}>{hotel.description}</p>
                     </div>
-                    <Rating className={s.hotel__rating}  type='full' reviewCount={1920} rating={9.3} />
+                    <Rating className={s.hotel__rating}  type='full' reviewCount={hotel.clientReviews.length} rating={hotel.reviewStars} />
                 </div>
                 <nav className={s.hotel__navbar}>
                     {hotelNav.map((nav,idx)=>{return <a href={nav.id} key={idx} className={`${s.hotel__nav} ${(navSelected == idx && s.hotel__nav_active)}`} onClick={()=>{setNavSelected(idx); setBackModifier(prev => prev + 1)}}>{nav.title}</a>})}
@@ -126,8 +99,8 @@ const HotelPage: FC = () => {
                 <section className={s.hotel__overview} id="overview">
                     <h3 className={s.overview__title}>Proprety overview</h3>
                     <div className={s.service__grid}>
-                        {services && services.map((service,idx)=>{
-                            return <li key={idx} className={s.service__name}>{service.title}</li>
+                        {hotel.services && hotel.services.map((service: any, idx: number)=>{
+                            return <li key={idx} className={s.service__name}>{service.hotelService.name}</li>
                         })}
                     </div>
                 </section>
@@ -136,8 +109,8 @@ const HotelPage: FC = () => {
                 <div className={s.container}>
                     <h3 className={s.section__title}>Rooms</h3>
                     <div className={s.rooms__grid}>
-                        {rooms && rooms.map((room,idx)=>{
-                            return <RoomCard key={room.id} smoking={room.smoking} id={room.id} title={room.title} price={room.price} maxPeople={room.maxPeople} imageURL={room.imageURL}/> 
+                        {hotel.rooms && hotel.rooms.length && hotel.rooms.map((room: any)=>{
+                            return <RoomCard key={room.id} smoking={room.smoking} id={room.id} title={room.name} price={room.price} maxPeople={room.basePerson} imageURL={room.imageURL}/> 
                         })}
                     </div>
                 </div>
@@ -148,18 +121,17 @@ const HotelPage: FC = () => {
                     <div className={s.reviews__grid}>
                         <div className={s.rating__total}>
                             <p className={s.rating__title}>Average rating</p>
-                            <h4 className={s.rating}>{rating}</h4>
+                            <h4 className={s.rating}>{hotel.reviewStars}</h4>
                         </div>
                         <div className={s.hotel__reviews}>
-                            
-                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti nemo ratione est excepturi aut deserunt quia. Quasi, ipsa nobis. Soluta, iusto asperiores. Non magnam perspiciatis nemo error asperiores corporis? Odit facilis natus aperiam optio, autem harum!'} rating={9.6} date={"March 20"}/>
-                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={6.152} date={"March 2"}/>
-                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={4} date={"September 21"}/>
-                            <Review username={'Mark M.'} reviewId={1} userId={1} comment={'Otdoxnul diko'} rating={9.6} date={"September 21"}/>
+                            {hotel.clientReviews.length ? hotel.clientReviews.map((review: any)=>{
+                                return <Review username={review.user.fullName} reviewId={review.id} userId={review.user.id} comment={review.comment} rating={review.stars} date={'2018-May-01'}/>
+                            }) : <div>Отзывов не найдено</div>}
                         </div>
                     </div>
                 </div>
             </section>
+            </div>}
         </section>
     );
 };

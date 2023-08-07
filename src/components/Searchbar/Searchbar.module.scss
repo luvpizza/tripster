@@ -1,0 +1,45 @@
+@import "@/styles/mixins";
+.searchbar {
+    padding: 10px 16px;
+    padding-left: 32px;
+    background: #fff;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var(--border-r-full);
+    &__form {
+        display: grid;
+        column-gap: 25px;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr 0.4fr;
+    }
+}
+.submit {
+    &__btn {
+        justify-self: flex-end;
+        @include flex-centered;
+        width: 54px;
+        height: 54px;
+        padding: 15px;
+        border-radius: var(--border-r-full);
+        & > svg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+.form{
+    &__item{
+        display: flex;
+        flex-direction: column;
+        color: var(--grey-text);
+        font-weight: 300;
+        &:not(:nth-last-child(2), :nth-last-child(1) ){
+            border-right: 1px solid var(--grey-divider);
+        }
+            
+        &__title{
+            color: var(--black-primary);
+            font-style: normal;
+            font-weight: 500;
+        }
+    }
+}

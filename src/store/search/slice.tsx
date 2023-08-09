@@ -14,9 +14,8 @@ const searchSlice = createSlice({
             state.search = action.payload.search;
         },
         removeSearch(state) {
-            state.search = null;
+            state.search = {City: "", startDate: "", endDate: "", Persons: 0};
         },
-
         setIsLoadingSearch(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
         },

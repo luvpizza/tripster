@@ -2,40 +2,60 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import {searchScheme} from '@/scheme/scheme';
 import {useFormik} from 'formik';
-import React, {FC, useState} from 'react';
+import {FC} from 'react';
 import Button from '../UI/buttons/Button/Button';
 import "react-datepicker/dist/react-datepicker.css";
 
 import s from "./Searchbar.module.scss"
 import {DatePickerField} from '../DatePickerField/DatePickerField';
+import {setSearch} from '@/store/search/slice';
+import {useAppDispatch} from '@/hooks/redux/reduxHooks';
+import {useNavigate} from 'react-router-dom';
 const Searchbar : FC = () => {
 
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
     type OnClickSubmitFn = (values : {
-        CityId: number;
+        City: string;
         startDate: Date,
         endDate: Date,
         Persons: number
     }) => void;
 
-    const onClickSubmit : OnClickSubmitFn = async({CityId, startDate, endDate, Persons}) => {
+    const onClickSubmit : OnClickSubmitFn = async({City, startDate, endDate, Persons}) => {
         const utcStartDate = dayjs(startDate)
             .utc(true)
-            .format();
+            .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
         const utcEndDate = dayjs(endDate)
             .utc(true)
-            .format();
-        console.log({CityId, startDate: utcStartDate, endDate: utcEndDate, Persons});
-
+            .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+        const cityFormatted = City
+            .trim()
+            .charAt(0)
+            .toUpperCase() + City
+            .trim()
+            .slice(1)
+        dispatch(setSearch({
+            search: {
+                City: cityFormatted,
+                startDate: utcStartDate,
+                endDate: utcEndDate,
+                Persons
+            }
+        }));
+        navigate('/search')
     }
 
     const formik = useFormik({
         initialValues: {
-            CityId: 0,
+            City: "Almata",
             startDate: new Date(),
             endDate: new Date(),
             Persons: 1
         },
-        onSubmit: onClickSubmit
+        onSubmit: onClickSubmit,
+        validationSchema: searchScheme,
     });
 
     return (
@@ -43,7 +63,16 @@ const Searchbar : FC = () => {
             <form className={s.searchbar__form} onSubmit={formik.handleSubmit}>
                 <div className={s.form__item}>
                     <h2 className={s.form__item__title}>City</h2>
-                    city
+                    <input
+                        name="City"
+                        value={formik.values.City}
+                        onChange={formik.handleChange}
+                        type={"text"}
+                        placeholder={"City"}
+                        style={{
+                        fontWeight: 300,
+                        width: 150
+                    }}/>
                 </div>
                 <div className={s.form__item}>
                     <h2 className={s.form__item__title}>Check-in</h2>
@@ -68,13 +97,23 @@ const Searchbar : FC = () => {
                 </div>
                 <div className={s.form__item}>
                     <h2 className={s.form__item__title}>Guests</h2>
-                    guests
+                    <input
+                        name="Persons"
+                        value={formik.values.Persons}
+                        onChange={formik.handleChange}
+                        type={"number"}
+                        placeholder={"Guests"}
+                        style={{
+                        fontWeight: 300,
+                        width: 100
+                    }}/>
                 </div>
                 <div className={s.form__item}>
                     <Button
                         buttonType='solid'
                         className={s.submit__btn}
-                        onClick={() => console.log(formik.values.startDate)}>
+                        type="submit"
+                        >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="17"

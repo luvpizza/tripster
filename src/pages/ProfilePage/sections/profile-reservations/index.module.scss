@@ -1,0 +1,16 @@
+.section{
+    &__title{
+        font-size: var(--fsize-lg);
+        font-weight: 500;
+    }
+    &__subtitle{
+        font-size: var(--fsize-md);
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
+.reservations{
+    &__list{
+        margin-top: 20px;
+    }
+}

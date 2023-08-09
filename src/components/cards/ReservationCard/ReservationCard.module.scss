@@ -1,0 +1,68 @@
+@import "@/styles/mixins";
+.reservation{
+    &__card{
+        @include hover-blue;
+        border-radius: var(--border-r-16);
+        border: 1px solid var(--grey-light);
+        padding: 15px;
+        width: 100%;
+    }
+    &__main{
+        display: grid;
+        grid-template-columns: 0.8fr 1fr 0.2fr;
+        align-items: center;
+    }
+    &__cancel{
+        font-weight: 600;
+        color: var(--red-text);
+        background: var(--red-light);
+        border: 1px solid var(--red-text);
+        &:hover{
+            box-shadow: none;
+        }
+    }
+}
+.modal{
+    &__footer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__info{
+        font-size: var(--fsize-20);
+    }
+}
+.link{
+    @include link-hover;
+}
+.info{
+    
+    &__item{
+        display: flex;
+        gap: 8px;
+        padding: 10px 4px;
+        border-bottom: 1px solid var(--grey-divider);
+        transition: .15s;
+
+        &:hover{
+            color: var(--blue-primary);
+        }
+        
+    }
+    &__key{
+        font-weight: 600;
+    }
+    &__value{
+        font-weight: 300;
+    }
+    &__price{
+        padding: 10px 4px;
+        margin-top: 20px;
+    }
+}
+.success{
+    color: var(--green-text);
+}
+.error{
+    color: var(--red-text)
+}

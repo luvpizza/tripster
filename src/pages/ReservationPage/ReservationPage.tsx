@@ -1,10 +1,12 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
+
+import s from "./ReservationPage.module.scss"
 
 const ReservationPage: FC = () => {
     return (
-        <div>
+        <section className={s.reservation}>
             
-        </div>
+        </section>
     );
 };
 

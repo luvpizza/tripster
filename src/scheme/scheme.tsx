@@ -1,3 +1,4 @@
+import dayjs, { Dayjs } from 'dayjs';
 import {date, number, object, ref, string} from 'yup';
 
 export const loginScheme = object({
@@ -18,31 +19,27 @@ export const signupScheme = object({
         .required('Required field'),
     password: string()
         .min(8, 'Password should be at least 8 characters long')
-        .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s:]).+$/,
-            'One uppercase, one number and one special character is required.'
-        )
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s:]).+$/, 'One uppercase, one number and one special character is required.')
         .required('Required field'),
     confirmPassword: string().oneOf([ref('password')], 'Passwords should match').required('Required field')
 });
 
 export const searchScheme = object({
-    CityId: number()
-        .required('Required field'),
+    City: string()
+      .trim()
+      .required('City is required'),
     startDate: date()
-        .required("Check-in date is required"),
+      .required('Start date is required'),
     endDate: date()
-        .required("Check-in date is required"),
+    .test('check-out-later-than-check-in', 'Check-out day must be equal to or later than check-in day', function (value) {
+        const startDate: string = this.resolve(ref('startDate'))
+        const startDay: Dayjs = dayjs(startDate).startOf('day')
+        const endDay = dayjs(value).startOf('day');
+        return endDay.isSame(startDay) || endDay.isAfter(startDay)
+      })
+      .required('End date is required'),
     Persons: number()
-        .required('Enter the number of guests')
-})
-
-// export const searchScheme = .object({
-//     city: number().required('City ID is required'),
-//     checkInDate: Yup.date().required('Check-in date is required'),
-//     checkOutDate: Yup.date().required('Check-out date is required'),
-//     guests: Yup.number()
-//       .integer('Number of guests must be an integer')
-//       .min(0, 'Number of guests cannot be negative')
-//       .required('Number of guests is required'),
-//   });
+      .min(1, 'Number of guests must be at least 1')
+      .required('Number of guests is required')
+  });
+  

@@ -1,4 +1,15 @@
 @import "@/styles/mixins";
+.section{
+    &__title{
+        font-size: var(--fsize-lg);
+        font-weight: 500;
+    }
+    &__subtitle{
+        font-size: var(--fsize-md);
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
 .favorites{
     &__preloader{
         width: 100%;
@@ -12,10 +23,11 @@
         display: flex;
         flex-direction: column;
         row-gap: 15px;
+        margin-top: 20px;
     }
 }
 .favorite{
-    padding: 15px 8px;
+    padding: 15px;
     border-radius: var(--border-r-16);
     transition: .15s ease;
     width: 100%;
@@ -33,6 +45,9 @@
             background: var(--red-light);
             color: var(--red-text);
         }
+    }
+    &__list{
+        margin-top: 20px;
     }
     &:hover{
         background: var(--grey-light);

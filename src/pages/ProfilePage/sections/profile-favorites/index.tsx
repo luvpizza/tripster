@@ -26,6 +26,8 @@ const ProfileFavorites : FC = () => {
     }, [deleteFavError, deleteFavIsSuccess]);
     return (
         <section className={s.profile__favorites}>
+            <h1 className={s.section__title}>Favorite hotels</h1>
+            <p className={s.section__subtitle}>See the hotels you saved</p>
             {isLoading && !error && <div className={s.favorites__preloader}><Preloader size="xl"/></div>}
             {!isLoading && !isFetching && !favorites.length && <div className={s.favoites__not_found}><NotFound/></div>}
             {!isLoading && favorites && 

@@ -5,6 +5,9 @@ export enum ROUTE_PATH {
     SIGNUP = '/signup',
     HOTEL = '/hotel/:id',
     PROFILE = '/profile',
+    SEARCH = '/search',
+    MANAGE = '/manage',
+    RESERVE = '/reserve',
     NOT_FOUND = '*',
 }
 
@@ -19,4 +22,11 @@ export type NavTab = {
     icon?: ReactNode,
     title: string,
     section: ReactNode,
+}
+export type ErrorMsg = {
+    status: number,
+    data: ErrorData,
+}
+export type ErrorData = {
+    error: string,
 }

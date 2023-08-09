@@ -41,3 +41,17 @@
 .logout{
     margin-top: 155px;
 }
+.manage{
+    margin-top: 15px;
+    border: 1px solid var(--blue-primary);
+    background: var(--blue-primary);
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: var(--border-r-16);
+    @include flex-centered;
+    color: #fff;
+    font-weight: 500;
+    &:hover{
+        background: #fff;
+    }
+}

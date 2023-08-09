@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getRole } from "./api";
 import { UserState } from "./types";
 
 const initialState: UserState = {
@@ -12,7 +13,10 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
-            state.user = action.payload.user;
+            state.user = action.payload.user;;
+        },
+        setUserRole(state,action){
+            state.user!.role = getRole(action.payload.token) || "User"
         },
         removeUser(state) {
             state.user = null;
@@ -31,6 +35,6 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, removeUser, setIsLoadingUser, setErrorUser, updateUserAvatar } = userSlice.actions;
+export const { setUser, setUserRole, removeUser, setIsLoadingUser, setErrorUser, updateUserAvatar } = userSlice.actions;
 
 export default userSlice.reducer;

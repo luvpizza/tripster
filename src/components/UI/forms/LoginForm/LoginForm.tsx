@@ -11,7 +11,7 @@ import Button from '../../buttons/Button/Button';
 import { useLoginMutation } from '@/app/api/auth/login/loginApi';
 import { useToast } from '@chakra-ui/react';
 import { useAppDispatch } from '@/hooks/redux/reduxHooks';
-import { setUser } from '@/store/user/slice';
+import { setUser, setUserRole } from '@/store/user/slice';
 
 interface LoginFormProps {
     className?: string
@@ -36,12 +36,13 @@ const LoginForm : FC < LoginFormProps > = ({className}) => {
     useEffect(() => {
         if(isSuccess){
             dispatch(setUser({user: data}))
+            dispatch(setUserRole({token: data.accessToken}))
             navigate('/')
             toast({status:"success", title:"You successfully logged in!", duration: 2200})
         }
         else if (error && 'status' in error){
             console.log(error)
-            toast({status: "error", title: "Error: " + error.status, description: error.data.error, duration: 2200,})
+            toast({status: "error", title: "Error: " + error.status + ".", description: error.data.error, duration: 2200,})
         }}, [isSuccess, error]);
     
     const formik = useFormik({

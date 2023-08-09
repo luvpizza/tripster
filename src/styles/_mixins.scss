@@ -11,3 +11,17 @@
     justify-content: center;
     align-items: center;
 }
+@mixin hover-blue{
+    transition: 0.2s ease;
+    &:hover{
+        border: 1px solid var(--blue-hover);
+        box-shadow: 2px 6px 48px 0px var(--blue-primary-30);
+    }
+}
+@mixin link-hover{
+    
+    &:hover{
+        color: var(--blue-hover);
+        text-decoration: underline;
+    }
+}

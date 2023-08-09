@@ -55,9 +55,9 @@ const HotelPage: FC = () => {
         if(isFavSuccess){
             toast({status:"success", title:"Favorite successfully added!", duration: 2200})
         }
-        else if (favError && 'status' in favError){
+        else if (favError){
             console.log(favError)
-            toast({status: "error", title: "Something went wrong" + favError.status, duration: 1800,})
+            toast({status: "error", title: favError.data.error, duration: 1800,})
         }}
      ,[favError, isFavSuccess]);
 

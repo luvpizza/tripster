@@ -3,7 +3,7 @@ import NotFound from '@/components/NotFound/NotFound';
 import Preloader from '@/components/Preloader/Preloader';
 import {useAppSelector} from '@/hooks/redux/reduxHooks';
 import {selectUserToken} from '@/store/user/selectors';
-import React, {FC, useEffect} from 'react';
+import {FC, useEffect} from 'react';
 import s from "./index.module.scss"
 
 const ProfileInfo : FC = () => {

@@ -1,8 +1,8 @@
 export type SearchQuery = {
-    cityId: number,
-    startDate: Date,
-    endDate: Date,
-    persons: number,
+    City: string,
+    startDate: Date | string,
+    endDate: Date | string,
+    Persons: number,
 }
 
 export type SearchState = {

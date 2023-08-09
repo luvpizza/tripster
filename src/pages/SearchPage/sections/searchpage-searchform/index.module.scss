@@ -1,0 +1,24 @@
+.search {
+    &__form {
+        padding: 30px 45px 45px 60px;
+        border-right: 1px solid var(--grey-divider);
+        display: flex;
+        gap: 12px;
+        flex-direction: column;
+
+    }
+}
+.form {
+    &__item {
+        &__title {
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: var(--fsize-sm);
+        }
+    }
+    &__title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: var(--fsize-19);
+    }
+}

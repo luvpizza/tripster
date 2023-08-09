@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import { authRoutesArr, privateRoutesArr, publicRoutesArr } from './routes';
+import { authRoutesArr, ownerRoutesArr, privateRoutesArr, publicRoutesArr } from './routes';
 import { Layout } from '@/components/Layout/Layout';
 import PrivateRoute from './private-route/PrivateRoute';
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 import AuthRoute from './auth-route/AuthRoute';
+import OwnerRoute from './owner-route/OwnerRoute';
 
 const AppRouter = () => {
     return (
@@ -18,6 +19,9 @@ const AppRouter = () => {
                 ))}
             {authRoutesArr.map(({path, Component})=>(
                 <Route key={path} path={path} element={<AuthRoute Component={Component}/>}/>
+            ))}
+            {ownerRoutesArr.map(({path, Component})=>(
+                <Route key={path} path={path} element={<OwnerRoute Component={Component}/>}/>
             ))}
         </Route>
     </Routes>

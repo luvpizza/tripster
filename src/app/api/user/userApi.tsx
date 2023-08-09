@@ -43,7 +43,26 @@ export const userApi = createApi({
                     "Authorization": `Bearer ${token}`
                 }
             })
-        })
+        }),
+        getUserReservations: builder.query({
+            query: (token) => ({
+                url: '/reservations/myReservations',
+                method: 'GET',
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+        }),
+        cancelReservation: builder.mutation({
+            query: ({token,id}) => ({
+                url: `/reservations/cancel/${id}`,
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            })
+        }),
     })
 })
 
@@ -51,5 +70,7 @@ export const {
     useGetCurrentUserQuery,
     useGetUserFavoritesQuery,
     useAddFavoriteHotelMutation,
-    useDeleteFavoriteHotelMutation
+    useDeleteFavoriteHotelMutation,
+    useGetUserReservationsQuery,
+    useCancelReservationMutation,
 } = userApi;

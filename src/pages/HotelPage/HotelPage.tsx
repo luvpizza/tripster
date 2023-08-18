@@ -15,10 +15,11 @@ import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/redux/reduxHooks';
 import { selectUser, selectUserToken } from '@/store/user/selectors';
+import ReviewForm from '@/components/UI/forms/ReviewForm/ReviewForm';
 
 const HotelPage: FC = () => {
     const id = usePathnameId()
-    const {data: hotel, isLoading, isFetching, error} = useGetHotelByIdQuery(id, {refetchOnMountOrArgChange: true, refetchOnReconnect: true})
+    const {data: hotel, isLoading, isFetching, error, refetch} = useGetHotelByIdQuery(id, {refetchOnMountOrArgChange: true, refetchOnReconnect: true})
     const [addFavoriteHotel, {isLoading: isFavLoading, error: favError, isSuccess: isFavSuccess, data: favData}] = useAddFavoriteHotelMutation()
 
     const hotelNav = [
@@ -109,9 +110,9 @@ const HotelPage: FC = () => {
                 <div className={s.container}>
                     <h3 className={s.section__title}>Rooms</h3>
                     <div className={s.rooms__grid}>
-                        {hotel.rooms && hotel.rooms.length && hotel.rooms.map((room: any)=>{
+                        {hotel.rooms && hotel.rooms.length ? hotel.rooms.map((room: any)=>{
                             return <RoomCard key={room.id} smoking={room.smoking} id={room.id} title={room.name} price={room.price} maxPeople={room.basePerson} imageURL={room.imageURL}/> 
-                        })}
+                        }) : "Rooms not found"}
                     </div>
                 </div>
             </section>
@@ -121,11 +122,12 @@ const HotelPage: FC = () => {
                     <div className={s.reviews__grid}>
                         <div className={s.rating__total}>
                             <p className={s.rating__title}>Average rating</p>
-                            <h4 className={s.rating}>{hotel.reviewStars}</h4>
+                            <h4 className={s.rating}>{hotel.clientReviews.length ? hotel.reviewStars : "Not rated"}</h4>
                         </div>
                         <div className={s.hotel__reviews}>
+                            {user && <ReviewForm hotelId={hotel.id} refetch={refetch}/>}
                             {hotel.clientReviews.length ? hotel.clientReviews.map((review: any)=>{
-                                return <Review username={review.user.fullName} reviewId={review.id} userId={review.user.id} comment={review.comment} rating={review.stars} date={'2018-May-01'}/>
+                                return <Review username={review.user.fullName} reviewId={review.id} userId={review.user.id} comment={review.comment} rating={review.stars} date={review.createdDate}/>
                             }) : <div>Отзывов не найдено</div>}
                         </div>
                     </div>

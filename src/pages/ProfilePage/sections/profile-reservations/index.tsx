@@ -1,5 +1,5 @@
-import {FC, useEffect} from 'react';
 import s from "./index.module.scss"
+import {FC, useEffect} from 'react';
 import {useAppSelector} from '@/hooks/redux/reduxHooks';
 import {selectUserToken} from '@/store/user/selectors';
 import {useToast} from '@chakra-ui/react';
@@ -33,7 +33,7 @@ const ProfileReservations : FC = () => {
             <p className={s.section__subtitle}>See the reservations you made</p>
             {isLoading && !error && <div className={s.preloader}><Preloader size="xl"/></div>}
             {!isLoading && !isFetching && (reservations.length < 1) && <div className={s.not_found}><NotFound/></div>}
-            {reservations && reservations.length && <div className={s.reservations__list}>
+            {reservations && reservations.length ? <div className={s.reservations__list}>
                 {reservations.map((reservation: Reservation)=>{
                     return <ReservationCard
                     id={reservation.id}
@@ -52,7 +52,7 @@ const ProfileReservations : FC = () => {
                     />
                 })}
             </div>
-            }
+            : null}
         </section>
     );
 };

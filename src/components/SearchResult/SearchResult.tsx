@@ -1,7 +1,7 @@
 import {Collapse, useDisclosure} from '@chakra-ui/react';
 import {FC} from 'react';
 import {ResultHotel, ResultRoom} from '@/types/search';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Rating from '../UI/misc/Rating/Rating';
 import Button from '../UI/buttons/Button/Button';
 
@@ -9,11 +9,15 @@ import s from "./SearchResult.module.scss"
 
 interface SearchResultProps {
     hotel : ResultHotel,
-    availableRooms : ResultRoom[]
+    availableRooms : ResultRoom[],
+    startDate: string,
+    endDate: string,
+    person: number,
 }
 
-const SearchResult : FC < SearchResultProps > = ({hotel, availableRooms}) => {
+const SearchResult : FC < SearchResultProps > = ({hotel, availableRooms, startDate, endDate, person}) => {
     const {isOpen, onToggle} = useDisclosure()
+    const navigate = useNavigate()
     return (
         <div className={s.result}>
             <div className={s.result__header}>
@@ -28,7 +32,9 @@ const SearchResult : FC < SearchResultProps > = ({hotel, availableRooms}) => {
                 </div>
                 <div className={s.hotel__right}>
                     <Rating className={s.hotel__rating} rating={hotel.reviewStars} type={"full"}/>
-                    <Button buttonType='solid' fullWidth onClick={onToggle}>{isOpen ? "Close" : "See all booking options"}</Button>
+                    <Button buttonType='solid' fullWidth onClick={onToggle}>{isOpen
+                            ? "Close"
+                            : "See all booking options"}</Button>
                 </div>
             </div>
             <Collapse in={isOpen}>
@@ -36,7 +42,7 @@ const SearchResult : FC < SearchResultProps > = ({hotel, availableRooms}) => {
                     {availableRooms !.map((room) => {
                         return <div className={s.result__room}>
                             <h2>{room.name}</h2>
-                            <Button buttonType='outlined'>{`Book for\n ${room.price}$/night`}</Button>
+                            <Button buttonType='outlined' onClick={() => {navigate(`/reserve?roomId=${room.id}&hotelId=${hotel.id}&startDate=${startDate}&endDate=${endDate}&person=${person}`)}}>{`Book for\n ${room.price}$/night`}</Button>
                         </div>
                     })}
                 </div>

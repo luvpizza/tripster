@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import DatePicker from "react-datepicker";
 
+import s from "./DatePickerField.module.scss"
+
 interface DatePickerFieldProps {
     name: any,
     value: any,
@@ -15,6 +17,8 @@ interface DatePickerFieldProps {
 export const DatePickerField: FC<DatePickerFieldProps> = ({ name, value, onChange, selectsStart, selectsEnd, startDate, endDate, minDate }) => {
     return (
         <DatePicker
+            calendarClassName={s.datepicker__calendar}
+            className={s.datepicker}
             selectsStart={selectsStart}
             selectsEnd={selectsEnd}
             startDate={startDate}

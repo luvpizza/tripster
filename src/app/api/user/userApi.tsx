@@ -63,6 +63,37 @@ export const userApi = createApi({
                 },
             })
         }),
+        addReservation: builder.mutation({
+            query: ({token, roomId, startDate, endDate, person}) => ({
+                url: `/reservations/make`,
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: {
+                    roomId,
+                    startDate,
+                    endDate,
+                    person
+                }
+            })
+        }),
+        addReview: builder.mutation({
+            query: ({token,review}) => ({
+                url: `/UsersReviews/create`,
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: {
+                    hotelId: review.hotelId,
+                    stars: review.stars,
+                    comment: review.comment
+                },
+            })
+        })
     })
 })
 
@@ -73,4 +104,6 @@ export const {
     useDeleteFavoriteHotelMutation,
     useGetUserReservationsQuery,
     useCancelReservationMutation,
+    useAddReviewMutation,
+    useAddReservationMutation,
 } = userApi;

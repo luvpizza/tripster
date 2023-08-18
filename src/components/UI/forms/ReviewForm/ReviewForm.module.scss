@@ -1,0 +1,45 @@
+@import "@/styles/mixins";
+.review{
+    &__form{
+        border: 1px solid var(--grey-divider);
+        transition: .15s;
+        @include hover-blue;
+        padding: 20px;
+        background: #fff;
+        border-radius: var(--border-r-16);
+    }
+}
+.form{
+    &__title{
+        font-weight: 600;
+        font-size: var(--fsize-lg);
+    }
+    &__header{
+        padding: 15px 0px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: max-content 3fr;
+    }
+}
+.score{
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    &__btn{
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        @include flex-centered;
+        border-radius: var(--border-r-full);
+        font-weight: 500;
+        color: var(--blue-primary);
+        border: 1px solid var(--blue-primary);
+    }
+    &__selected{
+        background: var(--blue-primary);
+        color: #fff;
+    }
+}
+.submit{
+    margin-top: 20px;
+}

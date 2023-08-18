@@ -43,3 +43,7 @@ export const searchScheme = object({
       .required('Number of guests is required')
   });
   
+export const reviewScheme = object({
+    stars: number().required('Review score is required').min(1).max(10),
+    comment: string().required('Comment is required'),
+})

@@ -32,7 +32,7 @@ const SearchPage : FC = () => {
                                 <div className={s.results__list}>
                                     {
                                         results!.map((result: SearchResultType)=>{
-                                            return <SearchResult hotel={result.hotel} availableRooms={result.availableRooms}/>
+                                            return <SearchResult hotel={result.hotel} availableRooms={result.availableRooms} startDate={searchQuery.startDate} endDate={searchQuery.endDate} person={searchQuery.Persons}/>
                                         })
                                     }
                                 </div>

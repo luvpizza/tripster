@@ -29,32 +29,28 @@
 .favorite{
     padding: 15px;
     border-radius: var(--border-r-16);
+    border: 1px solid var(--grey-light);
     transition: .15s ease;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     cursor: pointer;
+    @include hover-blue;
     &__btn_delete{
         width: 40%;
         padding: 4px;
         font-weight: 600;
         transition: 0.15s ease;
-        border-radius: 5px;
+        border-radius: var(--border-r-16);
+        color: var(--red-text);
+        border: 1px solid var(--red-text);
         &:hover{
             background: var(--red-light);
-            color: var(--red-text);
         }
     }
     &__list{
         margin-top: 20px;
-    }
-    &:hover{
-        background: var(--grey-light);
-        // color: #fff;
-        & > p {
-            // color: #fff;
-        }
     }
     &__container{
         display: grid;

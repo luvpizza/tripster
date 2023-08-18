@@ -32,9 +32,9 @@ const ProfileFavorites : FC = () => {
             {!isLoading && !isFetching && !favorites.length && <div className={s.favoites__not_found}><NotFound/></div>}
             {!isLoading && favorites && 
                 <div className={s.favorites__list}>
-                    {favorites.map((favorite: any)=>
+                    {favorites ? favorites.map((favorite: any)=>
                     <div className={s.favorite__container}>
-                        <Link to={`/hotel/${favorite.hotel.id}` }className={s.favorite}>
+                        <Link to={`/hotel/${favorite.hotel.id}`} target="_blank" rel="noopener noreferrer" className={s.favorite}>
                         <h2 className={s.favorite__title}>
                             {favorite.hotel.name}
                             <Rating type="small" rating={favorite.hotel.reviewStars}/>
@@ -44,7 +44,7 @@ const ProfileFavorites : FC = () => {
                         <button className={s.favorite__btn_delete} onClick={()=>{
                             deleteUserFavoriteHotel({token, id: favorite.id})
                         }}>X</button>
-                    </div>)}
+                    </div>) : "Favorites not found"}
                 </div>}
         </section>
     );

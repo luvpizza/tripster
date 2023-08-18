@@ -26,6 +26,7 @@
 }
 .container{
     @include container;
+    border-left: 1px solid var(--grey-divider);
 }
 .hotel{
     &__name{

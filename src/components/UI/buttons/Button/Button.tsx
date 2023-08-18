@@ -6,6 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes < HTMLButtonElement > {
     buttonType: 'solid' | 'outlined';
     fullWidth?: boolean;
     loading?: boolean;
+    type?:string,
 }
 
 const Button : FC < ButtonProps > = ({
@@ -20,6 +21,7 @@ const Button : FC < ButtonProps > = ({
 
     return (
         <button
+            disabled={loading}
             type={type}
             className={`${s.btn} ${fullWidth
             ? s.fullwidth

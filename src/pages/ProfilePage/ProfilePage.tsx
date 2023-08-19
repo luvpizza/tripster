@@ -26,22 +26,22 @@ const ProfilePage : FC = () => {
         navigate("/")
     }
     const [selectedTab,
-        setSelectedTab] = useState(1);
+        setSelectedTab] = useState(0);
     const navTabs : NavTab[] = [
         {
-            tabId: 1,
+            tabId: 0,
             icon: <PersonIcon/>,
             title: "Personal details",
             section: <ProfileInfo/>
         }, 
         {
-            tabId: 2,
+            tabId: 1,
             icon: <MenuBookIcon/>,
             title: "Reservations",
             section: <ProfileReservations/>
         },
         {
-            tabId: 3,
+            tabId: 2,
             icon: <FavoriteBorderIcon/>,
             title: "Favorites",
             section: <ProfileFavorites/>
@@ -58,17 +58,17 @@ const ProfilePage : FC = () => {
                         <div className={s.nav__tabs}>
                             {navTabs.map(tab => <div
                                 key={tab.tabId}
-                                className={s.nav__tab}
+                                className={`${s.nav__tab} ${tab.tabId === selectedTab &&s.nav__active}`}
                                 onClick={() => {
                                 setSelectedTab(tab.tabId)
                             }}>{tab.icon}{tab.title}</div>)}
-                            {user!.role === "Owner User" && <div className={`${s.nav__tab} ${s.manage}`} onClick={()=>{navigate('/manage')}}>Manage hotels</div>}
+                            {(user!.role === "Owner User" || user!.role === "Admin") && <div className={`${s.nav__tab} ${s.manage}`} onClick={()=>{navigate('/manage')}}>Manage hotels</div>}
                             <div className={`${s.nav__tab} ${s.logout}`} onClick={handleLogout}><LogoutIcon/>Log out</div>
                         </div>
                     </nav>
                     <div className={s.profile__content}>
                         <div className={s.container}>
-                            {navTabs[selectedTab - 1].section}
+                            {navTabs[selectedTab].section}
                         </div>
                     </div>
                 </div>

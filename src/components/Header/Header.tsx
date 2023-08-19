@@ -6,6 +6,7 @@ import { selectUser } from '@/store/user/selectors';
 import Button from "@/components/UI/buttons/Button/Button"
 
 import s from "./Header.module.scss"
+import { Tooltip } from '@chakra-ui/react';
 const Header = () => {
     const location = useLocation()
     const navigate = useNavigate()
@@ -15,11 +16,12 @@ const Header = () => {
     return (
         <header className={s.header}>
             <div className={s.header__links}>
-                <Link className={s.header__logo} to={"/"}>Tripster</Link>
+                <Tooltip label={"Back to homepage"} placement={"bottom"} bg={"rgba(0, 0, 0, 0.4)"}><Link className={s.header__logo} to={"/"}>Tripster</Link></Tooltip>
                 {location.pathname == '/' && <nav className={s.header__nav}>
                     <a href={"#popular"}>Popular</a>
                     <a href={"#loved"}>Trending</a>
                 </nav>}
+                {location.pathname == '/manage' && <h1>Hotel Manager</h1>}
             </div>
             {user  ? <div className={s.header__btns}>
                 <Button buttonType='solid' onClick={()=>{navigate('/profile')}}>Profile</Button>

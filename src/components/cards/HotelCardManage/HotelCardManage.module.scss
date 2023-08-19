@@ -1,0 +1,108 @@
+@import "@/styles/mixins";
+.hotel{
+    &__card{
+        border: 1px solid var(--grey-divider);
+        max-width: 680px;
+        padding: 20px;
+        @include hover-blue;
+        border-radius: var(--border-r-16);
+        transition: .15s ease;
+    }
+    &__stats{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        gap: 10px;
+    }
+    &__name{
+        @include flex-centered;
+        gap: 10px;
+        font-size: var(--fsize-xl);
+        font-weight: 700;
+    }
+    &__description{
+        color: var(--grey-text);
+        letter-spacing: 1.2px;
+        font-weight: 300;
+    }
+    &__tags{
+        @include flex-centered;
+        gap: 7px;
+        font-weight: 400;
+        font-size: var(--fsize-18);
+        padding: 20px;
+        // color: var(--grey-text);
+    }
+}
+.divider{
+    color: #000;
+    font-weight: 200;
+    font-size: var(--fsize-lg);
+}
+.rating{
+    opacity: 0.9;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    font-size: var(--fsize-lg);
+}
+.card{
+    &__img{
+        position: relative;
+        height: 160px;
+        & > img{
+            width: 100%;
+            height: 100%;
+            object-position: center;
+            object-fit: cover;
+        }
+    }
+    &__main{
+        padding: 30px 0 10px;
+        @include flex-centered;
+        flex-direction: column;
+    }
+}
+.edit{
+    &__form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    &__btn{
+        margin-top: 60px;
+    }
+    &__photos{
+        padding: 20px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        & > img{
+            border-radius: var(--border-r-8);
+        }
+        &_add{
+            cursor: pointer;
+            border-radius: var(--border-r-8);
+            color: var(--grey-divider);
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: .1s ;
+            @include flex-centered;
+            border: 4px dashed var(--grey-divider);
+            &:hover{
+                color: var(--grey-text);
+                border: 4px dashed var(--grey-text);
+
+            }
+        }
+    }
+}
+.good{
+    color: var(--green-text);
+    font-weight: 600;
+}
+.drawer{
+    overflow-y: scroll;
+}

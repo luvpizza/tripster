@@ -80,7 +80,6 @@ const LoginForm : FC < LoginFormProps > = ({className}) => {
                 <Button buttonType="solid" loading={isLoading} type={"submit"} fullWidth>Log In</Button>
                 <Link to="/signup" className={s.to_signup}>Not a member? <span className={s.text_blue}>Sign up</span></Link>
             </form>
-
         </div>
     );
 };

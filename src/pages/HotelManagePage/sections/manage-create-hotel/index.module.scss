@@ -1,0 +1,19 @@
+.section{
+    &__title{
+        margin-top: 60px;
+        font-size: var(--fsize-lg);
+        font-weight: 600;
+    }
+    &__subtitle{
+        font-size: var(--fsize-md);
+        font-weight: 300;
+        color: var(--grey-text);
+    }
+}
+.create_hotel__form{
+    max-width: 650px;
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

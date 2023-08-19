@@ -18,6 +18,7 @@ import {loginApi} from "@/app/api/auth/login/loginApi";
 import {userApi} from "@/app/api/user/userApi";
 import {signupApi} from "@/app/api/auth/signup/signupApi";
 import {hotelApi} from "@/app/api/hotel/hotelApi";
+import { geoApi } from "@/app/api/geo/geoApi";
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -25,13 +26,14 @@ const rootReducer = combineReducers({
     [loginApi.reducerPath]: loginApi.reducer,
     [signupApi.reducerPath]: signupApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-    [hotelApi.reducerPath]: hotelApi.reducer
+    [hotelApi.reducerPath]: hotelApi.reducer,
+    [geoApi.reducerPath]: geoApi.reducer,
 })
 
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['hotelApi', 'signupApi', 'userApi', 'loginApi']
+    blacklist: ['hotelApi', 'signupApi', 'userApi', 'loginApi', 'geoApi']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -54,6 +56,7 @@ const store = configureStore({
         .concat(signupApi.middleware)
         .concat(userApi.middleware)
         .concat(hotelApi.middleware)
+        .concat(geoApi.middleware)
 })
 
 export type RootState = ReturnType < typeof store.getState >;
